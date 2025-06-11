@@ -1,15 +1,16 @@
-import { Heart, Menu, Search, User } from "lucide-react";
+import { Menu, Search} from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSearch } from "../../hooks/useSearch";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showInput, setShowInput] = useState(false);
+  const {searchQuery,handleSearchChange} = useSearch()
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
-  // const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <header className="w-full bg-zinc-900 text-zinc-100 shadow-lg p-2">
@@ -39,14 +40,26 @@ export const Header = () => {
             <Link to="/catalogo" className="hover:text-zinc-500 cursor-pointer">
               Catálogo
             </Link>
-            <Link
+            {/* <Link
               to="/favoritos"
               className="hover:text-zinc-500 cursor-pointer"
             >
               <Heart className="w-6 h-6 hover:text-zinc-500 cursor-pointer" />
-            </Link>
-            <Search className="w-6 h-6 hover:text-zinc-500 cursor-pointer" />
-            <User className="w-6 h-6 hover:text-zinc-500 cursor-pointer" />
+            </Link> */}
+            <div className="flex items-center ">
+              {showInput && (
+                <input
+                  type="text"
+                  name="search"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  placeholder="Buscar..."
+                  className="bg-zinc-800 text-zinc-100 px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
+                />
+              )}  
+            <Search className="w-6 h-6 hover:text-zinc-500 cursor-pointer" onClick={() => setShowInput(!showInput)}/>
+            </div>
+            {/* <User className="w-6 h-6 hover:text-zinc-500 cursor-pointer" /> */}
           </div>
         </div>
       </div>
