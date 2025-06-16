@@ -1,11 +1,5 @@
-import { Catalog } from "../../components/Catalog/Catalog";
-import { Header } from "../../components/Header/Header"
+import { Catalog } from "../../components/Catalog/Catalog"
 
-export const HomePage = () => {
-  return (
-    <div>
-      <Header/>
-    <Catalog/>
-    </div>
-  );
+export const HomePage =()=>{
+  return <Catalog/>
 }

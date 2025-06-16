@@ -1,11 +1,19 @@
-import { axiosInstance } from "./axios"; 
+import { axiosInstance } from "./axios";
 
-export const login = async (user) => {
+export const registerRequest = async (user) => {
   try {
-    const response = await axiosInstance.post("/login", user);
-    return response.data;
+    return await axiosInstance.post("/register", user);
   } catch (error) {
     console.error("Login error:", error);
     throw error;
   }
-}
+};
+
+export const loginRequest = async (user) => {
+  try {
+    return await axiosInstance.post("/login", user);
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
+  }
+};

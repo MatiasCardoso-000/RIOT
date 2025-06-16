@@ -1,4 +1,4 @@
-import { Menu, Search} from "lucide-react";
+import { Heart, Menu, Search} from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";
@@ -40,13 +40,13 @@ export const Header = () => {
             <Link to="/catalogo" className="hover:text-zinc-500 cursor-pointer">
               Catálogo
             </Link>
-            {/* <Link
+            <Link
               to="/favoritos"
               className="hover:text-zinc-500 cursor-pointer"
             >
               <Heart className="w-6 h-6 hover:text-zinc-500 cursor-pointer" />
-            </Link> */}
-            <div className="flex items-center ">
+            </Link>
+            <div className="flex items-center gap-2">
               {showInput && (
                 <input
                   type="text"

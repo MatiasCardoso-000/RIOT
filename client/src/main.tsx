@@ -6,17 +6,20 @@ import { BrowserRouter } from "react-router-dom";
 import { ProductsProvider } from "./context/Products/ProductsProvider.tsx";
 import { SearchProvider } from "./context/Search/SearchProvider.tsx";
 import { AppRouter } from "./AppRouter.tsx";
+import { AuthProvider } from "./context/Auth/AuthProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <SearchProvider>
-        <CartProvider>
-          <ProductsProvider>
-            <AppRouter />
-          </ProductsProvider>
-        </CartProvider>
-      </SearchProvider>
+      <AuthProvider>
+        <SearchProvider>
+          <CartProvider>
+            <ProductsProvider>
+              <AppRouter />
+            </ProductsProvider>
+          </CartProvider>
+        </SearchProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>
 );

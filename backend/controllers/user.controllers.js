@@ -47,7 +47,12 @@ const login = async (req, res) => {
     });
     res.cookie("token", token);
 
-    res.status(200).json("User logged sucessfully", { user });
+    res.status(200).json({
+      email:user.email,
+      username:user.username,
+      uid: user.uid,
+      role_id: user.role_id
+    });
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Internal server error" });
