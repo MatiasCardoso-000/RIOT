@@ -1,11 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { App } from "./App.tsx";
 import { CartProvider } from "./context/Cart/CartProvider.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ProductsProvider } from "./context/Products/ProductsProvider.tsx";
 import { SearchProvider } from "./context/Search/SearchProvider.tsx";
+import { AppRouter } from "./AppRouter.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -13,7 +13,7 @@ createRoot(document.getElementById("root")!).render(
       <SearchProvider>
         <CartProvider>
           <ProductsProvider>
-            <App />
+            <AppRouter />
           </ProductsProvider>
         </CartProvider>
       </SearchProvider>

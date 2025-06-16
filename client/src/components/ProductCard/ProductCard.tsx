@@ -1,38 +1,56 @@
-// import { Heart,  ShoppingCart} from "lucide-react";
+import { Heart } from "lucide-react";
 import type { Product } from "../../types/product.interface";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 interface ProductCardProps {
-  product: Product; 
+  product: Product;
 }
 
-export const ProductCard = ({product}: ProductCardProps) => {
+export const ProductCard = ({ product }: ProductCardProps) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
   // const handleAddToCart = () => {
   //   addToCart(product, selectedSize, selectedColor);
   // };
 
-  return (
+  const handleFavoriteProduct = () => {
+    setIsFavorite(!isFavorite);
+  };
 
+  return (
     <div className="bg-zinc-50 rounded-lg shadow-md hover:shadow-lg transition-shadow">
       <div className="relative">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-88 object-cover"
-        />
-        {/* <button
+        <Link to={`/productos/descripcion/${product.name}`}>
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-88 object-cover"
+          />
+        </Link>
+        <button
           className={`absolute bg-white top-3 right-3 p-2 rounded-full transition-colors shadow-md cursor-pointer hover:bg-zinc-200`}
+          onClick={handleFavoriteProduct}
         >
-          <Heart className="w-4 h-4"  />
-        </button> */}
+          <Heart
+            className={`${
+              isFavorite ? "fill-red-500 text-red-500 w-4 h-4" : "w-4 h-4"
+            }`}
+          />
+        </button>
       </div>
-      
+
       <div className="p-4">
-        <Link to={`/product-description/${product.name}`} className="block mb-2">
-          <h3 className="text-lg font-semibold text-zinc-800 mb-2">{product.name}</h3>
+        <Link
+          to={`/productos/descripcion/${product.name}`}
+          className="block mb-2"
+        >
+          <h3 className="text-lg font-semibold text-zinc-800 mb-2">
+            {product.name}
+          </h3>
         </Link>
         <p className="text-zinc-600 text-sm mb-3">{product.description}</p>
-       
+
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-zinc-800">
             ${product.price.toLocaleString()}
