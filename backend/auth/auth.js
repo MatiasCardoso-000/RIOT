@@ -17,3 +17,7 @@ export const loginRequest = async (user) => {
     throw error;
   }
 };
+
+export const verifyToken = async (token) => {
+  return await axiosInstance.get("/verify", token);
+};

@@ -6,6 +6,7 @@ interface AuthContextType {
   signUp: (user: User) => void;
   signIn: (user: User) => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -13,4 +14,5 @@ export const AuthContext = createContext<AuthContextType>({
   signUp: (user: User) => user,
   signIn: (user: User) => user,
   isAuthenticated: false,
+  isLoading: true,
 });

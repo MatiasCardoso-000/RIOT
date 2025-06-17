@@ -107,10 +107,18 @@ const deleteUser = async (req, res) => {
   }
 };
 
+
+const validateToken = async(req,res)=> {
+  const {token} = req.cookies
+  console.log(token);
+  
+}
+
 export const UserController = {
   register,
   login,
   getUserById,
   updateUser,
   deleteUser,
+  validateToken
 };

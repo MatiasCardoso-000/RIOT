@@ -1,7 +1,9 @@
-import { Heart, Menu, Search} from "lucide-react";
+import { Heart, Menu, Search, User} from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";
+import { useAuth } from "../../hooks/useAuth";
+import { UserAuthIcon } from "../UserAuthIcon/UserAuthIcon";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -59,7 +61,7 @@ export const Header = () => {
               )}  
             <Search className="w-6 h-6 hover:text-zinc-500 cursor-pointer" onClick={() => setShowInput(!showInput)}/>
             </div>
-            {/* <User className="w-6 h-6 hover:text-zinc-500 cursor-pointer" /> */}
+              <UserAuthIcon/>
           </div>
         </div>
       </div>
