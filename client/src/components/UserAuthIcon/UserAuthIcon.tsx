@@ -18,9 +18,9 @@ export const UserAuthIcon = () => {
       </button>
 
       {!isAuthenticated && isActive && (
-        <div>
-          <Link to={"/login"}>Ingresar</Link>
-          <Link to={"/registro"}>Registrarse</Link>
+        <div className="flex flex-col gap-2 absolute top-20 right-0 p-4 bg-zinc-900">
+          <Link to={"/login"} className="hover:underline">Ingresar</Link>
+          <Link to={"/registro"} className="hover:underline">Registrarse</Link>
         </div>
       )}
     </>

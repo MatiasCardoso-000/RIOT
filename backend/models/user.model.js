@@ -3,17 +3,17 @@ import { db } from "../database/database.js";
 const createUser = async ({ username, email, password }) => {
   const query = {
     text: `
-    INSERT INTO users (username, email, password)
+    INSERT INTO users ( email, password,username)
     VALUES ($1, $2, $3)
-    RETURNING *
+    RETURNING username,email,uid,role_id
   `,
-    values: [username, email, password],
+    values: [ email, password,username],
   };
   const { rows } = await db.query(query);
   return rows[0];
 };
 
-const getUsers = async () => {
+const find = async () => {
   const query = {
     text: `
     SELECT * FROM USERS
@@ -23,7 +23,7 @@ const getUsers = async () => {
   return rows;
 };
 
-const findByEmail = async (email) => {
+const findOne = async (email) => {
   const query = {
     text: `
       SELECT * FROM USERS 
@@ -47,7 +47,7 @@ const findById = async (uid) => {
   return rows[0];
 };
 
-const updateUser = async (id, { username, email, password }) => {
+const update = async (id, { username, email, password }) => {
   try {
     const result = await db.query(
       "UPDATE users SET username = $1, email = $2, password = $3 WHERE uid = $4 RETURNING *",
@@ -74,9 +74,9 @@ const deleteOne = async (uid) => {
 
 export const UserModel = {
   createUser,
-  getUsers,
-  findByEmail,
+  find,
+  findOne,
   findById,
-  updateUser,
+  update,
   deleteOne,
 };

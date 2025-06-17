@@ -1,21 +1,11 @@
 import { axiosInstance } from "./axios";
 
 export const registerRequest = async (user) => {
-  try {
-    return await axiosInstance.post("/register", user);
-  } catch (error) {
-    console.error("Login error:", error);
-    throw error;
-  }
+  return await axiosInstance.post("/register", user);
 };
 
 export const loginRequest = async (user) => {
-  try {
-    return await axiosInstance.post("/login", user);
-  } catch (error) {
-    console.error("Login error:", error);
-    throw error;
-  }
+  return await axiosInstance.post("/login", user);
 };
 
 export const verifyToken = async (token) => {

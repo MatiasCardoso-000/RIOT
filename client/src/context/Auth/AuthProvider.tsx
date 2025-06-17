@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User>({} as User);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const signUp = async (user: User) => {
     try {
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
       setUser(res.data);
     } catch (error) {
-      console.log(error);
+      setErrors(error.response.data.message);
     }
   };
 
@@ -35,12 +36,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (res.status !== 200) {
         throw new Error("Hubo un error al iniciar sesión");
       }
-      console.log(res.data);
-      
+
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
-      console.log(error);
+      setErrors(error.response.data.message);
     }
   };
 
@@ -51,11 +51,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (!cookies.token) {
         setIsAuthenticated(false);
         setIsLoading(false);
-        return setUser({} as User);
+        setUser({} as User);
+        return;
       }
 
       try {
-        const res = await verifyToken();
+        const res = await verifyToken(cookies.token);
         if (!res.data) {
           setIsAuthenticated(false);
           setIsLoading(false);
@@ -69,7 +70,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setIsAuthenticated(false);
         setUser({} as User);
         setIsLoading(false);
-        console.log(error);
+        setErrors(error.response.data.message);
       }
     };
 
@@ -78,7 +79,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, signIn, isAuthenticated, isLoading }}
+      value={{ user, signUp, signIn, isAuthenticated, isLoading, errors }}
     >
       {children}
     </AuthContext.Provider>
