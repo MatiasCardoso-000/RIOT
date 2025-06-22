@@ -1,4 +1,4 @@
-import { Heart, Menu, Search, User} from "lucide-react";
+import { Heart, Menu, Search, User } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";
@@ -8,7 +8,7 @@ import { UserAuthIcon } from "../UserAuthIcon/UserAuthIcon";
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const {searchQuery,handleSearchChange} = useSearch()
+  const { searchQuery, handleSearchChange } = useSearch();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -18,8 +18,11 @@ export const Header = () => {
     <header className="w-full bg-zinc-900 text-zinc-100 shadow-lg p-2">
       <div className="flex justify-between items-center h-16">
         {/* Logo */}
-        <Link to={"/"} className="flex-shrink-0 flex items-center">
-          <h1 className="text-2xl font-bold text-zinc-100">RIOT</h1>
+        <Link
+          to={"/"}
+          className="w-full md:text-center md:ml-50"
+        >
+          <h1 className="text-4xl  font-bold text-zinc-100">RIOT</h1>
         </Link>
 
         {/* Desktop Navigation */}
@@ -58,10 +61,13 @@ export const Header = () => {
                   placeholder="Buscar..."
                   className="bg-zinc-800 text-zinc-100 px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
                 />
-              )}  
-            <Search className="w-6 h-6 hover:text-zinc-500 cursor-pointer" onClick={() => setShowInput(!showInput)}/>
+              )}
+              <Search
+                className="w-6 h-6 hover:text-zinc-500 cursor-pointer"
+                onClick={() => setShowInput(!showInput)}
+              />
             </div>
-              <UserAuthIcon/>
+            <UserAuthIcon />
           </div>
         </div>
       </div>

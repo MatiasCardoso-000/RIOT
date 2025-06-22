@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
-import { ProductCard } from "../ProductCard/ProductCard";
 import { useState } from "react";
-import type { Product } from "../../types/product.interface";
 import { Minus, Plus } from "lucide-react";
 
 export const ProductDescription = () => {
@@ -20,11 +18,11 @@ export const ProductDescription = () => {
       {products.map((product) => {
         if (product.name.includes(searchName))
           return (
-            <div className="flex gap-4 justify-around">
+            <div className="flex  flex-wrap  gap-4 justify-around">
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-3/4 h-[600px] object-cover rounded-md"
+                className="w-full md:w-3/4 md:h-[600px] object-cover rounded-md"
               />
 
               <div className="flex flex-col gap-4">
