@@ -16,6 +16,8 @@ export const Login = () => {
   const onSubmit = handleSubmit(async (data: User) => {
      signIn(data);
   });
+  console.log(LoginErrors);
+  
 
   useEffect(()=> {
     if(isAuthenticated) <Navigate to={'/'}/>

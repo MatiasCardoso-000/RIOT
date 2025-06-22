@@ -6,7 +6,7 @@ export interface Product {
   image: string;
   category: string;
   stock?: number;
-  sizes?: string[];
-  colors?: string[]
-  quantity?: number; // Optional, used for cart management
+  sizes: string[];
+  color: string;
+  quantity: number; // Optional, used for cart management
   isFavorite?: boolean;} // Optional, used for favorites management

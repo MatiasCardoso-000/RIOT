@@ -1,5 +1,5 @@
 import { Catalog } from "../../components/Catalog/Catalog"
 
-export const HomePage =()=>{
+export const Home = () => {
   return <Catalog/>
 }
