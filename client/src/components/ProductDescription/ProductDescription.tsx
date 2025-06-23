@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 export const ProductDescription = () => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -18,7 +19,7 @@ export const ProductDescription = () => {
       {products.map((product) => {
         if (product.name.includes(searchName))
           return (
-            <div className="flex  flex-wrap  gap-4 justify-around">
+            <div className="flex flex-col md:flex-row  gap-4 justify-around">
               <img
                 src={product.image}
                 alt={product.name}
@@ -51,13 +52,18 @@ export const ProductDescription = () => {
 
                 <div className="flex w-full items-center  gap-4">
                   <div className="bg-white flex items-center justify-between w-1/3">
-                    <button className="text-2xl p-1  cursor-pointer"><Minus /></button>
+                    <button className="text-2xl p-1  cursor-pointer">
+                      <Minus />
+                    </button>
                     <span className="text-xl">{product.quantity}</span>
-                    <button className="text-2xl p-1 cursor-pointer"><Plus /></button>
+                    <button className="text-2xl p-1 cursor-pointer">
+                      <Plus />
+                    </button>
                   </div>
                   <button className="w-full bg-zinc-950 p-4 text-zinc-50 cursor-pointer hover:bg-zinc-800">
                     Agregar al carrito
                   </button>
+                
                 </div>
               </div>
             </div>
