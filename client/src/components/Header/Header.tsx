@@ -1,8 +1,8 @@
-import { Heart, Menu, Search, User } from "lucide-react";
+import { Heart, Menu, Search} from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";
-import { useAuth } from "../../hooks/useAuth";
+
 import { UserAuthIcon } from "../UserAuthIcon/UserAuthIcon";
 
 export const Header = () => {
@@ -21,13 +21,6 @@ export const Header = () => {
         <Link to={"/"} className="w-full px-4">
           <h1 className="text-6xl font-bold text-zinc-100">RIOT</h1>
         </Link>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8"></nav>
-
-        {/* Desktop User Actions */}
-        <div className="hidden md:flex items-center space-x-4"></div>
-
         {/* Mobile Navigation */}
 
         <div className="md:hidden">

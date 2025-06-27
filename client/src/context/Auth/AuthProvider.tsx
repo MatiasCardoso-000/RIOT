@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User>({} as User);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState([]);
 
   const signUp = async (user: User) => {
     try {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
       setUser(res.data);
     } catch (error) {
-      setErrors(error.response.data.message);
+      setErrors(error.response.data.errors);
     }
   };
 
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
-      setErrors(error.response.data.message);
+      setErrors(error.response.data.errors)
     }
   };
 

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import type { User } from "../../types/user.interface";
 import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
@@ -11,17 +11,15 @@ export const Login = () => {
     formState: { errors },
   } = useForm<User>();
 
-  const { signIn,isAuthenticated,errors: LoginErrors } = useAuth();
-
+  const { signIn, isAuthenticated, errors: LoginErrors } = useAuth();
+  const navigate = useNavigate();
   const onSubmit = handleSubmit(async (data: User) => {
-     signIn(data);
+    signIn(data);
   });
-  console.log(LoginErrors);
-  
 
-  useEffect(()=> {
-    if(isAuthenticated) <Navigate to={'/'}/>
-  },[isAuthenticated])
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated,navigate]);
 
   return (
     <section className="flex items-center justify-between overflow-hidden">
@@ -32,12 +30,11 @@ export const Login = () => {
         <h1 className="text-5xl text-center w-1/2 text-zinc-900 font-bold ">
           Ingreso
         </h1>
-    {
-      LoginErrors.map((error, index) => (
-        <p key={index} className="text-red-500 w-1/2 text-center">
-          {error} 
-        </p>
-      ))}
+        {LoginErrors.map((error, index) => (
+          <p key={index} className="text-red-500 w-1/2 text-center">
+            {error}
+          </p>
+        ))}
         <form
           className="w-full flex flex-col  gap-6 items-center"
           onSubmit={onSubmit}

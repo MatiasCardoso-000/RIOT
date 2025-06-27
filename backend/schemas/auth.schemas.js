@@ -142,10 +142,7 @@ export const loginSchema = z.object({
     .string({ required_error: "Password is required" })
     .min(6, "Password must be at least 6 characters long")
     .max(128, "Password must not exceed 128 characters")
-    .refine((password) => passwordRegex.test(password), {
-      message:
-        "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character (@$!%*?&._-)",
-    })
+    
     .refine(
       (password) => {
         // Verificar que no contenga espacios

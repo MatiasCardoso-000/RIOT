@@ -5,11 +5,11 @@ import jwt from "jsonwebtoken";
 const register = async (req, res) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
-    return res.status(400).json({ message: ["All fields are required"] });
+    return res.status(400).json({ errors: ["All fields are required"] });
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await UserModel.createUser({
+    const user = await UserModel.create({
       username,
       email,
       password: hashedPassword,
@@ -17,40 +17,39 @@ const register = async (req, res) => {
     const token = jwt.sign({ id: user.uid }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("token", token);
 
-    res.status(201).json({ user, token });
+    return res.status(201).json({ user, token });
   } catch (error) {
     console.error("Error creating user:", error);
-    res.status(500).json({ message: ["Internal server error"] });
+    res.status(500).json({ errors: ["Internal server error"] });
   }
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(400).json({ message: ["All fields are required"] });
+    return res.status(400).json({ errors: ["All fields are required"] });
   }
-
+  
   try {
-    const user = await UserModel.findOne(email);
-    if (!user) {
-      return res.status(404).json({ message: ["User not found"] });
-    }
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (!isValidPassword) {
-      return res.status(401).json({ message: ["Invalid credentials"] });
+    const userFound = await UserModel.findOne(email);
+
+    if (!userFound) {
+      return res.status(404).json({ errors: ["User not found"] });
     }
 
-    const token = jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, {
+    const isValidPassword = await bcrypt.compare( password,userFound.password);
+    if (!isValidPassword) {
+      return res.status(401).json({ errors: ["Invalid credentials"] });
+    }
+
+    const token = jwt.sign({ uid: userFound.uid }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.cookie("token", token);
- 
-    res.status(200).json(user);
+
+    return res.json({ userFound, token });
   } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ message: ["Internal server error"] });
+    res.status(500).json({ errors: [error.message] });
   }
 };
 
@@ -59,12 +58,12 @@ const getUserById = async (req, res) => {
   try {
     const user = await UserModel.findById(uid);
     if (!user) {
-      return res.status(404).json({ message: ["User not found"] });
+      return res.status(404).json({ errors: ["User not found"] });
     }
     res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user:", error);
-    res.status(500).json({ message: ["Internal server error"] });
+    res.status(500).json({ errors: ["Internal server error"] });
   }
 };
 
@@ -73,7 +72,7 @@ const updateUser = async (req, res) => {
   try {
     const user = await UserModel.findById(uid);
     if (!user) {
-      return res.status(404).json({ message: ["User not found"] });
+      return res.status(404).json({ errors: ["User not found"] });
     }
     const { username, email, password } = req.body;
     const updatedUser = await UserModel.update(uid, {
@@ -82,12 +81,12 @@ const updateUser = async (req, res) => {
       password,
     });
     if (!updatedUser) {
-      return res.status(404).json({ message: ["User not found"] });
+      return res.status(404).json({ errors: ["User not found"] });
     }
     res.status(200).json(updatedUser);
   } catch (error) {
     console.error("Error updating user:", error);
-    res.status(500).json({ message: ["Internal server error"] });
+    res.status(500).json({ errors: ["Internal server error"] });
   }
 };
 
@@ -98,7 +97,7 @@ const deleteUser = async (req, res) => {
     res.status(204).json(result);
   } catch (error) {
     console.error("Error deleting user:", error);
-    res.status(500).json({ message: ["Internal server error"] });
+    res.status(500).json({ errors: ["Internal server error"] });
   }
 };
 

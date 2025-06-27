@@ -13,6 +13,11 @@ export const ProductsProvider = ({
       name: "Remera Over Size Blanca",
       price: 15000,
       image: "../../../public/IMG-20250609-WA0001.jpg",
+      modelImage: [
+        "../../../public/IMG-20250615-WA0006.jpg",
+        "../../../public/IMG-20250615-WA0007.jpg",
+        "../../../public/IMG-20250615-WA0008.jpg",
+      ],
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -24,6 +29,7 @@ export const ProductsProvider = ({
       name: "Remera OverSize Unisex Negro",
       price: 15000,
       image: "../../../public/IMG-20250609-WA0002.jpg",
+      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -35,6 +41,7 @@ export const ProductsProvider = ({
       name: "Remera Over Size Marrón",
       price: 15000,
       image: "../../../public/IMG-20250609-WA0003.jpg",
+      modelImage: ["../../../public/IMG-20250615-WA0008.jpg"],
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -46,6 +53,7 @@ export const ProductsProvider = ({
       name: "Remera OverSize Unisex Gris",
       price: 15000,
       image: "../../../public/IMG-20250609-WA0004.jpg",
+      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -57,6 +65,7 @@ export const ProductsProvider = ({
       name: "Remera Básica Rosada",
       price: 12000,
       image: "../../../public/remeras_basicas.jpg",
+      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
       description: "Remera Básica de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -68,6 +77,7 @@ export const ProductsProvider = ({
       name: "Remera Básica Marrón Claro",
       price: 12000,
       image: "../../../public/remeras_basicas_beige.jpg",
+      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
       description: "Remera Básica de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -76,8 +86,23 @@ export const ProductsProvider = ({
     },
   ]);
 
+  const nextProductdImage = (product: Product, imageIndex: number) => {
+    const productExists = products.findIndex((p) => p.id === product.id);
+
+    if (!productExists) {
+      console.log(imageIndex++);
+    }
+    // setProducts((prevProducts) =>
+    //   prevProducts.map((p) =>
+    //     p.id === product.id
+    //       ? { ...p, modelImage: [p.modelImage[imageIndex++]] }
+    //       : p
+    //   )
+    // );
+  };
+
   return (
-    <ProductsContext.Provider value={{ products }}>
+    <ProductsContext.Provider value={{ products, nextProductdImage }}>
       {children}
     </ProductsContext.Provider>
   );

@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 
 export const validateToken = (req, res, next) => {
-  const {token} = req.header.cookies;
-  console.log(token);
-  
+  let token = req.headers.authorization;
+
+  token = token.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ message: ["No token provided"] });

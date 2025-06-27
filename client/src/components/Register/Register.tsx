@@ -10,10 +10,10 @@ export const Register = () => {
     formState: { errors },
   } = useForm<User>();
 
-  const { signUp } = useAuth();
+  const { signUp, errors: RegisterErrors } = useAuth();
 
   const onSubmit = handleSubmit(async (data: User) => {
-    await signUp(data);
+    signUp(data);
   });
 
   return (
@@ -25,6 +25,12 @@ export const Register = () => {
         <h1 className="text-5xl text-center w-1/2 text-zinc-900 font-bold ">
           Registro
         </h1>
+
+        {RegisterErrors.map((error, index) => (
+          <p key={index} className="text-red-500 w-1/2 text-center">
+            {error}
+          </p>
+        ))}
         <form
           className="w-full flex flex-col gap-6 items-center"
           onSubmit={onSubmit}
@@ -36,6 +42,12 @@ export const Register = () => {
             className="w-1/2 border p-2"
             {...register("email", { required: true })}
           />
+          {errors.email && (
+            <p className="text-red-500 w-full text-left mt-2">
+              El correo electrónico es requerido
+            </p>
+          )}
+
           <input
             type="text"
             id="username"
@@ -43,6 +55,10 @@ export const Register = () => {
             className="w-1/2 border p-2"
             {...register("username", { required: true })}
           />
+          {errors.username && (
+            <p className="text-red-500 w-1/3 mt-2">Ingrese un usuario</p>
+          )}
+
           <input
             type="password"
             id="password"
@@ -50,6 +66,11 @@ export const Register = () => {
             className="w-1/2 border p-2"
             {...register("password", { required: true })}
           />
+          {errors.password && (
+            <p className="text-red-500 w-1/3 mt-2">
+              Ingrese una contraseña válida
+            </p>
+          )}
           <button className="w-1/2 bg-zinc-900 text-zinc-50 p-2 cursor-pointer hover:bg-zinc-700">
             Registrarse
           </button>

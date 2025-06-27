@@ -1,6 +1,6 @@
 import { db } from "../database/database.js";
 
-const createUser = async ({ username, email, password }) => {
+const create = async ({ username, email, password }) => {
   const query = {
     text: `
     INSERT INTO users ( email, password,username)
@@ -73,7 +73,7 @@ const deleteOne = async (uid) => {
 };
 
 export const UserModel = {
-  createUser,
+  create,
   find,
   findOne,
   findById,
