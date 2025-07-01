@@ -8,15 +8,11 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
 
   // const handleAddToCart = () => {
   //   addToCart(product, selectedSize, selectedColor);
   // };
 
-  const handleFavoriteProduct = () => {
-    setIsFavorite(!isFavorite);
-  };
 
   return (
     <div className="bg-zinc-50 rounded-lg shadow-md hover:shadow-lg transition-shadow">
@@ -28,16 +24,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             className="w-full h-88 object-cover"
           />
         </Link>
-        <button
-          className={`absolute bg-white top-3 right-3 p-2 rounded-full transition-colors shadow-md cursor-pointer hover:bg-zinc-200`}
-          onClick={handleFavoriteProduct}
-        >
-          <Heart
-            className={`${
-              isFavorite ? "fill-red-500 text-red-500 w-4 h-4" : "w-4 h-4"
-            }`}
-          />
-        </button>
       </div>
 
       <div className="p-4">

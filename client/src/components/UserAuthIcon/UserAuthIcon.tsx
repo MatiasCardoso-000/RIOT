@@ -17,7 +17,7 @@ export const UserAuthIcon = () => {
         <User className="w-6 h-6 hover:text-zinc-500 cursor-pointer" />
       </button>
 
-      {!isAuthenticated || isActive && (
+      {isActive && (
         <div className="flex flex-col gap-2 absolute top-20 right-0 p-4 bg-zinc-900">
           <Link to={"/login"} className="hover:underline">Ingresar</Link>
           <Link to={"/registro"} className="hover:underline">Registrarse</Link>

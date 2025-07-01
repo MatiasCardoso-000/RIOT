@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Footer = () => {
   return (
     <footer className="bg-zinc-900 text-zinc-300 mt-12 w-full">
@@ -59,20 +61,9 @@ export const Footer = () => {
               Síguenos
             </h4>
             <ul className="text-sm space-y-2">
-              <li>
-                <a href="#" className="hover:text-zinc-100 transition-colors">
+              <Link to={"https://www.instagram.com/riot.urban/"} target="_blank" className="hover:text-zinc-100 transition-colors">
                   Instagram
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://wa.me/5491162373100?text=Hola,%20quiero%20hacer%20una%20consulta"
-                  target="_blank"
-                  className="hover:text-zinc-100 transition-colors"
-                >
-                  Mercado Libre
-                </a>
-              </li>
+              </Link>
             </ul>
           </div>
         </div>

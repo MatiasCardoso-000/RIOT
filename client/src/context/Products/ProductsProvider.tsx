@@ -10,14 +10,10 @@ export const ProductsProvider = ({
   const [products, setProducts] = useState<Product[]>([
     {
       id: 1,
-      name: "Remera Over Size Blanca",
+      name: "Remera Oversize Blanca",
       price: 15000,
-      image: "../../../public/IMG-20250609-WA0001.jpg",
-      modelImage: [
-        "../../../public/IMG-20250615-WA0006.jpg",
-        "../../../public/IMG-20250615-WA0007.jpg",
-        "../../../public/IMG-20250615-WA0008.jpg",
-      ],
+      image:"../../../public/productos/remeras/oversize/IMG-20250612-WA0006.jpg",
+      
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -26,10 +22,9 @@ export const ProductsProvider = ({
     },
     {
       id: 2,
-      name: "Remera OverSize Unisex Negro",
+      name: "Remera Oversize Negro",
       price: 15000,
-      image: "../../../public/IMG-20250609-WA0002.jpg",
-      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
+      image: "../../../public/productos/remeras/oversize/IMG-20250612-WA0007.jpg",
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -38,10 +33,9 @@ export const ProductsProvider = ({
     },
     {
       id: 3,
-      name: "Remera Over Size Marrón",
+      name: "Remera Oversize Marrón",
       price: 15000,
-      image: "../../../public/IMG-20250609-WA0003.jpg",
-      modelImage: ["../../../public/IMG-20250615-WA0008.jpg"],
+      image: "../../../public/productos/remeras/oversize/IMG-20250627-WA0003.jpg",
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -50,10 +44,9 @@ export const ProductsProvider = ({
     },
     {
       id: 4,
-      name: "Remera OverSize Unisex Gris",
+      name: "Remera Oversize Gris",
       price: 15000,
-      image: "../../../public/IMG-20250609-WA0004.jpg",
-      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
+      image: "../../../public/productos/remeras/oversize/IMG-20250612-WA0005.jpg",
       description: "Remera Over Size de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -64,8 +57,7 @@ export const ProductsProvider = ({
       id: 5,
       name: "Remera Básica Rosada",
       price: 12000,
-      image: "../../../public/remeras_basicas.jpg",
-      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
+      image: "../../../public/productos/remeras/basicas/IMG-20250612-WA0008.jpg",
       description: "Remera Básica de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
@@ -74,35 +66,33 @@ export const ProductsProvider = ({
     },
     {
       id: 6,
-      name: "Remera Básica Marrón Claro",
+      name: "Remera Básica Marrón",
       price: 12000,
-      image: "../../../public/remeras_basicas_beige.jpg",
-      modelImage: ["../../../public/IMG-20250615-WA0006.jpg"],
+     image: "../../../public/productos/remeras/basicas/IMG-20250627-WA0012.jpg",
       description: "Remera Básica de algodón 100% de alta calidad.",
       category: "Básica",
       sizes: ["S", "M", "L", "XL"],
-      color: "Marrón Claro",
+      color: "Marrón",
       quantity: 0,
     },
   ]);
 
-  const nextProductdImage = (product: Product, imageIndex: number) => {
-    const productExists = products.findIndex((p) => p.id === product.id);
 
-    if (!productExists) {
-      console.log(imageIndex++);
+  const increaseQuantity = (product: Product) => {
+    if (product.quantity >= 0) {
+      return setProducts(
+        products.map((p) =>
+          p.id === product.id
+            ? { ...p, quantity: p.quantity + 1 }
+            : p
+        )
+      );
     }
-    // setProducts((prevProducts) =>
-    //   prevProducts.map((p) =>
-    //     p.id === product.id
-    //       ? { ...p, modelImage: [p.modelImage[imageIndex++]] }
-    //       : p
-    //   )
-    // );
-  };
+    return product;
+  }
 
   return (
-    <ProductsContext.Provider value={{ products, nextProductdImage }}>
+    <ProductsContext.Provider value={{ products,setProducts,increaseQuantity  }}>
       {children}
     </ProductsContext.Provider>
   );
