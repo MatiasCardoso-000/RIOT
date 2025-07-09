@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 import type { Cart } from "../../types/cart.interface";
 
@@ -13,8 +13,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       // If the item already exists in the cart, update its quantity
       newCart[existingItem].quantity++;
       setCart(newCart);
-      localStorage.setItem("cart", JSON.stringify(cart));
-
     } else {
       // If the item doesn't exist, add it to the cart
 
@@ -27,11 +25,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           color: product.color,
           size: selectedSize ?? "",
           price: product.price,
-          quantity:product.quantity,
+          quantity: product.quantity,
         },
       ]);
-      localStorage.setItem("cart", JSON.stringify(cart));
     }
+    localStorage.setItem("cart", JSON.stringify(cart));
   };
 
   const removeProductFromCart = (product: Cart) => {
@@ -42,6 +40,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       // If the item already exists in the cart, update its quantity
       newCart[existingItem].quantity--;
       setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
     return;
   };
@@ -49,6 +48,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const deleteProductFromCart = (product: Cart) => {
     setCart(cart.filter((item) => item.id !== product.id));
   };
+
+  useEffect(() => {}, [cart]);
 
   return (
     <CartContext.Provider

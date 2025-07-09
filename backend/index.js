@@ -4,11 +4,13 @@ import { router as productsRoutes } from "./routes/products.routes.js";
 import { router as userRoutes } from "./routes/user.routes.js";
 import cors from "cors";
 import helmet from "helmet";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.disable("x-powered-by");
 
+app.use(cookieParser())
 app.use(helmet());
 
 //CORS Configurado
@@ -22,8 +24,8 @@ app.use(
 );
 
 //Middleware parsing de datos
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}));
 
 app.use("/api/auth", productsRoutes);
 app.use("/api/auth", userRoutes);

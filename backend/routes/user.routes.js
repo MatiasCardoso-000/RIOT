@@ -8,7 +8,4 @@ export const router = Router();
 
 router.post('/register', validateSchema(registerSchema),UserController.register);
 router.post('/login',validateSchema(loginSchema), UserController.login);
-router.get('/users/:uid', UserController.getUserById);
-// router.put('/users/:id', UserController.updateUser);
-router.delete('/users/:uid', UserController.deleteUser);
-router.get('/verify',validateToken)
+router.get('/verify',validateToken, UserController.verifyToken);

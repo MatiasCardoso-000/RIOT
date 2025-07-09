@@ -15,7 +15,6 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User>({} as User);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState([]);
 
@@ -26,8 +25,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         throw new Error("Hubo un error al registrar el usuario");
       }
       setUser(res.data);
-    } catch (error) {
-      setErrors(error.response.data.errors);
+    } catch (error: any) {
+      setErrors(error.response.data.message);
     }
   };
 
@@ -37,19 +36,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (res.status !== 200) {
         throw new Error("Hubo un error al iniciar sesión");
       }
-
-      setUser(res.data);
+      setUser(res.data.user);
       setIsAuthenticated(true);
-    } catch (error) {
-      setErrors(error.response.data.errors)
+    } catch (error: any) {
+      setErrors(error.response.data.errors);
     }
+  };
+
+  const logout = () => {
+    Cookies.remove("token");
+    setIsAuthenticated(false);
+    setUser({} as User);
+    setIsLoading(false);
   };
 
   useEffect(() => {
     const checkLogin = async () => {
-      const cookies = Cookies.get();
+      const token = Cookies.get("token");
 
-      if (!cookies.token) {
+      if (!token) {
         setIsAuthenticated(false);
         setIsLoading(false);
         setUser({} as User);
@@ -57,15 +62,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
 
       try {
-        const res = await verifyToken(cookies.token);
+        const res = await verifyToken(token);
         if (!res.data) {
           setIsAuthenticated(false);
           setIsLoading(false);
+          setUser({} as User);
           return;
         }
-
-        setIsAuthenticated(true);
+        
         setUser(res.data);
+        setIsAuthenticated(true);
         setIsLoading(false);
       } catch (error) {
         setIsAuthenticated(false);
@@ -76,11 +82,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     checkLogin();
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <AuthContext.Provider
-      value={{ user, signUp, signIn, isAuthenticated, isLoading, errors  }}
+      value={{
+        user,
+        signUp,
+        signIn,
+        logout,
+        isAuthenticated,
+        isLoading,
+        errors,
+      }}
     >
       {children}
     </AuthContext.Provider>

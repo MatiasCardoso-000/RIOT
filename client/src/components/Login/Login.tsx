@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import type { User } from "../../types/user.interface";
 import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
@@ -16,6 +16,7 @@ export const Login = () => {
   const onSubmit = handleSubmit(async (data: User) => {
     signIn(data);
   });
+
 
   useEffect(() => {
     if (isAuthenticated) navigate("/");

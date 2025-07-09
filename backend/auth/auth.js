@@ -9,7 +9,9 @@ export const loginRequest = async (user) => {
 };
 
 export const verifyToken = async (token) => {
-  return await axiosInstance.get("/verify", {
-    headers: { Authorization: `Bearer ${token}` },
+  return axiosInstance.get("/verify", {
+    headers: {
+      Authorization: `Bearer: ${token}`
+    }
   });
 };

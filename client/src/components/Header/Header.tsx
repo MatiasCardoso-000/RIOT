@@ -1,4 +1,4 @@
-import { Heart, Menu, Search, ShoppingBag } from "lucide-react";
+import { Menu, Search, Settings, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearch } from "../../hooks/useSearch";
@@ -10,7 +10,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const { searchQuery, handleSearchChange } = useSearch();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -34,7 +34,7 @@ export const Header = () => {
         >
           <div className="px-2 pt-2 pb-3 ">
             <div className="flex items-center gap-8 ">
-                {showInput && (
+              {showInput && (
                 <input
                   type="text"
                   name="search"
@@ -48,12 +48,20 @@ export const Header = () => {
                 className="w-6 h-6 hover:text-zinc-500 cursor-pointer"
                 onClick={() => setShowInput(!showInput)}
               />
-            
-             <Link to={'/carrito'}>
-              <ShoppingBag />
-             </Link>
+
+              <Link to={"/carrito"}>
+                <ShoppingBag />
+              </Link>
+              {user.role_id === 1 && isAuthenticated && (
+                <Link to="/admin" title="Administración">
+                  <Settings className="w-6 h-6 hover:text-zinc-500 cursor-pointer" />
+                </Link>
+              )}
+              {
+                isAuthenticated && <h3 className="text-white">{user.username}</h3>
+              }
+              <UserAuthIcon />
             </div>
-            {user.role === "admin" && <UserAuthIcon />}
           </div>
         </div>
       </div>

@@ -1,16 +1,27 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
+interface ProtectedRoutesProps {
+  children?: React.ReactNode;
+  redirectTo: string;
+  requiredRole?: number | null;
+  isAuthenticated?: boolean;
+}
+
 export const ProtectedRoutes = ({
   children,
-  redictTo,
-}: {
-  children: React.ReactNode;
-  redictTo: string;
-}) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  redirectTo,
+  requiredRole,
+  isAuthenticated,
+}: ProtectedRoutesProps) => {
+  const { isLoading, user } = useAuth();
 
-  if (isLoading || !isAuthenticated) return <Navigate to={redictTo} replace />;
+  if (isLoading) return <h1>Cargando...</h1>;
 
-  return isAuthenticated ? children : <Outlet />;
+  if (requiredRole && user?.role_id !== requiredRole) {
+    <Navigate to={redirectTo} replace />;
+  }
+  if (!isAuthenticated && !isLoading) return <Navigate to={redirectTo} replace />;
+
+  return children ? <>{children}</> : <Outlet />;
 };

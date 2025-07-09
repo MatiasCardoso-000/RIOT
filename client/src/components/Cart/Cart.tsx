@@ -9,9 +9,13 @@ export const Cart = () => {
     removeProductFromCart,
     deleteProductFromCart,
   } = useCart();
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  const storagedCart = JSON.parse(localStorage.getItem("cart"))
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  
+  const storagedCart = (() => {
+   const stored = localStorage.getItem("cart");
+   return stored ? JSON.parse(stored) : null;
+ })();
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded h-screen">
