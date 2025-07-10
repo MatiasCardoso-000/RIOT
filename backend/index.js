@@ -27,7 +27,7 @@ app.use(
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}));
 
-app.use("/api/auth", productsRoutes);
+app.use("/api/products", productsRoutes);
 app.use("/api/auth", userRoutes);
 
 // Rutas de salud del servidor

@@ -3,9 +3,9 @@ import { db } from "../database/database.js";
 const create = async ({ name, description, price, image, stock, category }) => {
   const query = {
     text: `
-      INSERT INTO PRODUCTS (NAME, DESCRIPTION, PRICE, IMAGE, STOCK,  CATEGORY)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING NAME, DESCRIPTION, PRICE, IMAGE, STOCK, CATEGORY, PID
+      INSERT INTO PRODUCTS (NAME, DESCRIPTION, PRICE, IMAGE,SIZES, STOCK,  CATEGORY)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING NAME, DESCRIPTION, PRICE, IMAGE, STOCK, SIZES,CATEGORY, PID
     `,
     values: [name, description, price, image, stock, category],
   };

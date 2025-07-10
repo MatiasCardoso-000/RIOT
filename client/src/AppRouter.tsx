@@ -9,7 +9,9 @@ import { ProtectedRoutes } from "./components/ProtectedRoutes/ProtectedRoutes";
 import { useAuth } from "./hooks/useAuth";
 
 export const AppRouter = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  console.log("authenticated", isAuthenticated);
+  console.log("loading", isLoading);
 
   return (
     <main className="h-screen">
@@ -19,6 +21,7 @@ export const AppRouter = () => {
             <ProtectedRoutes
               requiredRole={1}
               isAuthenticated={isAuthenticated}
+              isLoading={isLoading}
               redirectTo="/"
             />
           }
@@ -28,7 +31,7 @@ export const AppRouter = () => {
         <Route path="/login" element={<Login />} />
 
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          {!isLoading && <Route index element={<Home />} />}
           <Route
             path="/productos/descripcion/:name"
             element={<ProductPage />}

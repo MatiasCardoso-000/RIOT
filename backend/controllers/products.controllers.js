@@ -1,9 +1,9 @@
 import { ProductModel } from "../models/product.model.js";
 
 export const createProduct = async (req, res) => {
-  const { name, description, price, image, stock,  category } = req.body;
+  const { name, description, price, image, stock,sizes,  category } = req.body;
 
-  if (!name || !description || !price || !image || !stock || !category) {
+  if (!name || !description || !price || !image || !stock || !sizes || !category) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -12,6 +12,7 @@ export const createProduct = async (req, res) => {
       name,
       description,
       price,
+      sizes,
       image,
       stock,
       category,

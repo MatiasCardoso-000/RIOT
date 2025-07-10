@@ -17,7 +17,6 @@ export const Login = () => {
     signIn(data);
   });
 
-
   useEffect(() => {
     if (isAuthenticated) navigate("/");
   }, [isAuthenticated,navigate]);

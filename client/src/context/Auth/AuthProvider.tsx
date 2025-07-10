@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import type { User } from "../../types/user.interface";
 import {
-  registerRequest,
   loginRequest,
   verifyToken,
 } from "../../../../backend/auth/auth.js";
@@ -17,18 +16,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState([]);
-
-  const signUp = async (user: User) => {
-    try {
-      const res = await registerRequest(user);
-      if (!res.ok) {
-        throw new Error("Hubo un error al registrar el usuario");
-      }
-      setUser(res.data);
-    } catch (error: any) {
-      setErrors(error.response.data.message);
-    }
-  };
 
   const signIn = async (user: User) => {
     try {
@@ -46,8 +33,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = () => {
     Cookies.remove("token");
     setIsAuthenticated(false);
-    setUser({} as User);
     setIsLoading(false);
+    setUser({} as User);
   };
 
   useEffect(() => {
@@ -75,8 +62,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setIsLoading(false);
       } catch (error) {
         setIsAuthenticated(false);
-        setUser({} as User);
         setIsLoading(false);
+        setUser({} as User);
         setErrors(error.response.data.message);
       }
     };
@@ -88,7 +75,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider
       value={{
         user,
-        signUp,
         signIn,
         logout,
         isAuthenticated,

@@ -9,7 +9,7 @@ import { AppRouter } from "./AppRouter.tsx";
 import { AuthProvider } from "./context/Auth/AuthProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
@@ -21,5 +21,5 @@ createRoot(document.getElementById("root")!).render(
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>
+  // {/* </StrictMode> */}
 );

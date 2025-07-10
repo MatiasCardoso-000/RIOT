@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useFetch } from "../../hooks/useFetch";
 
 export const Admin = () => {
   const [form, setForm] = useState({
@@ -7,15 +8,24 @@ export const Admin = () => {
     description: "",
     sizes: "",
     color: "",
+    stock: "",
     image: "",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
+  const productsURL = import.meta.env.BACKEND_URL;
+
+  const URL = `${productsURL}/products`;
+
+  const { data } = useFetch(URL);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,20 +34,10 @@ export const Admin = () => {
     setSuccess(false);
 
     // Convierte los talles separados por coma a array
-    const productData = {
-      ...form,
-      price: parseFloat(form.price),
-      sizes: form.sizes.split(",").map((s) => s.trim()),
-    };
 
     try {
-      // Cambia la URL por la de tu backend real
-      const res = await fetch("/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(productData),
-      });
-      if (!res.ok) throw new Error("Error al agregar el producto");
+    
+      if (!data) throw new Error("Error al agregar el producto");
       setSuccess(true);
       setForm({
         name: "",
@@ -45,8 +45,10 @@ export const Admin = () => {
         description: "",
         sizes: "",
         color: "",
+        stock: "",
         image: "",
       });
+      console.log(form);
     } catch (err: any) {
       setError(err.message || "Error desconocido");
     } finally {
@@ -55,9 +57,9 @@ export const Admin = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded shadow">
+    <div className="h-screen flex flex-col items-center justify-center max-w-xl mx-auto  p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-6">Agregar nuevo producto</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
         <input
           name="name"
           value={form.name}
@@ -102,7 +104,16 @@ export const Admin = () => {
           required
         />
         <input
+          name="stock"
+          value={form.stock}
+          onChange={handleChange}
+          placeholder="Stock"
+          className="border p-2 rounded"
+          required
+        />
+        <input
           name="image"
+          type="file"
           value={form.image}
           onChange={handleChange}
           placeholder="URL de la imagen"
@@ -116,7 +127,9 @@ export const Admin = () => {
         >
           {loading ? "Agregando..." : "Agregar producto"}
         </button>
-        {success && <p className="text-green-600">¡Producto agregado correctamente!</p>}
+        {success && (
+          <p className="text-green-600">¡Producto agregado correctamente!</p>
+        )}
         {error && <p className="text-red-600">{error}</p>}
       </form>
     </div>

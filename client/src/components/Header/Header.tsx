@@ -30,8 +30,11 @@ export const Header = () => {
         <div
           className={` ${
             mobileMenuOpen ? "flex" : "hidden"
-          } justify-end absolute top-16 right-0 md:flex items-center space-x-4 bg-zinc-900 text-zinc-100 w-full md:w-auto md:static md:bg-transparent md:space-x-8`}
+          } w-full justify-end absolute top-16 right-0 md:flex items-center space-x-4 bg-zinc-900 text-zinc-100  md:max-w-md md:static md:bg-transparent md:space-x-8`}
         >
+          {isAuthenticated && (
+            <p>Bienvenido <span>{user.username}</span></p>
+          )}
           <div className="px-2 pt-2 pb-3 ">
             <div className="flex items-center gap-8 ">
               {showInput && (
@@ -57,9 +60,7 @@ export const Header = () => {
                   <Settings className="w-6 h-6 hover:text-zinc-500 cursor-pointer" />
                 </Link>
               )}
-              {
-                isAuthenticated && <h3 className="text-white">{user.username}</h3>
-              }
+
               <UserAuthIcon />
             </div>
           </div>
